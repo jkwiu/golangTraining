@@ -16,7 +16,7 @@ func main() {
 	}
 
 	for i := 0; i < 3; i++ {
-		for j := 3; j > i; j-- {
+		for j := 2; j > i; j-- {
 			fmt.Print("*")
 		}
 		fmt.Println("")
