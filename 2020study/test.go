@@ -2,13 +2,26 @@ package main
 
 import "fmt"
 
+type Student struct {
+	name string
+	age int
+
+	grade string
+	class string
+}
+
+func (s *Student) PrintSundjunk()  {
+	fmt.Println(s.class, s.grade)
+}
+
+func (s *Student) InputSungjuk(class string, grade string) {
+	s.class = class
+	s.grade = grade
+}
+
 func main() {
-	arr := [5]int{1, 2, 3, 4, 5}
-	clone := [5]int{}
+	var s Student = Student{name:"jk", age:23, class:"수학", grade:"A++"}
 
-	for i := 0; i < 5; i++ {
-		clone[i] = arr[i]
-	}
-
-	fmt.Println(clone)
+	s.InputSungjuk("과학", "C")
+	s.PrintSundjunk()
 }
