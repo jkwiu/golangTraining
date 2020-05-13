@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"training/golang_lecture/stack_tree_queue/dataStruct"
+	"golangTraining/2018study/stack_tree_queue/dataStruct"
 )
 
 func main() {

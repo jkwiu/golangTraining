@@ -232,8 +232,58 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
     4.  항목 추가
         1.  ``append(arr, element)``
             1.  기존의 arr에 항목을 추가한 것이 아니고 새로운 배열을 만들어 복사하고 반환한 것이다. 공간이 여유롭다면 이전의 배열에 추가한다.
-                1.  capacity를 두배로 늘린다.
+                1.  capacity를 ``두 배``로 늘린다.
                 2.  ``printf``에서 ``%p``는 주소를 찍는 것
                 3.  **공간이 충분하다면 같은 메모리를 참조하게 되므로 주의할 것**
                     1.  처음부터 공간을 다르게 확보하는 것이 버그를 줄인다.
                         1.  ``copy()``
+25. Slice2
+    1.  ``arr[i:n]``으로 잘라낼 수 있다(``i<= ~ <n``)
+        1.  ``end`` index를 생략하면 끝까지
+        2.  ``start`` index를 생략하면 처음부터
+        3.  ``arr1``을 잘라내서 ``arr2``를 만들었다면 새로 만든게 아니라 같은 메모리를 가르킨다.(**주의**)
+        4.  하지만, 이렇게 자른다고해서 메모리가 사라지는 것이 아니다.(**주의**)
+    2.  Slice 심화
+        1.  동적 배열
+        2.  자료구조이며 Structure를 갖고 있다
+            1.  pointer: 시작 주소
+            2.  len: 갯수
+            3.  cap: 최대값
+    3.  Instance
+        1.  OOP
+            1.  Teacher, input, Student  / ``관계강조``
+        2.  Procedure
+            1.  input(teacher, student) / ``기능강조``
+26. List
+    1.  떨어져있는 데이터들을 연결하는 자료구조
+    2.  Linked List
+    3.  Double Linked List
+        1.  Linked List와 배열의 차이점
+            1.  추가할 때 
+                1.  Slice
+                    1.  ``O(N)``
+                2.  List
+                    1.  ``O(1)``
+            2.  삭제할 때
+                1.  Slice
+                    1.  맨 앞, 맨 끝
+                        1.  ``O(1)``
+                    2.  중간
+                        1.  ``O(N)``
+                2.  List
+                    1.  ``O(1)``
+            3.  특정 ``index``를 가져올 때
+                1.  Slice
+                    1.  ``O(1)``
+                2.  List
+                    1.  ``O(N)``
+            4.  데이터를 가져올 때 그 메모리 주소의 근방을 가져온다(``cache: 4kb``). 근데 list는 근처에 다음 값이 없기 때문에 ``cache miss``가 된다. 그래서 게임에서 ``배열``을 많이 쓴다.
+27. Packaging과 Stack, Que
+    1.  Packaging
+        1.  대문자는 공개
+        2.  소문자는 비공개
+    2.  stack과 que는 slice와 linked list로 만들 수 있다. 
+    3.  Stack
+        1.  FILO(First Input Last Out)
+    4.  Queue
+        1.  FIFO(First Input First Out)
