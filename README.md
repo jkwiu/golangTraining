@@ -254,36 +254,49 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
             1.  Teacher, input, Student  / ``관계강조``
         2.  Procedure
             1.  input(teacher, student) / ``기능강조``
-26. List
+26. Linked List
     1.  떨어져있는 데이터들을 연결하는 자료구조
-    2.  Linked List
-    3.  Double Linked List
-        1.  Linked List와 배열의 차이점
-            1.  추가할 때 
-                1.  Slice
+27. Double Linked List
+    1.  Linked List와 배열의 차이점
+        1.  추가할 때 
+            1.  Slice
+                1.  ``O(N)``
+            2.  List
+                1.  ``O(1)``
+        2.  삭제할 때
+            1.  Slice
+                1.  맨 앞, 맨 끝
+                    1.  ``O(1)``
+                2.  중간
                     1.  ``O(N)``
-                2.  List
-                    1.  ``O(1)``
-            2.  삭제할 때
-                1.  Slice
-                    1.  맨 앞, 맨 끝
-                        1.  ``O(1)``
-                    2.  중간
-                        1.  ``O(N)``
-                2.  List
-                    1.  ``O(1)``
-            3.  특정 ``index``를 가져올 때
-                1.  Slice
-                    1.  ``O(1)``
-                2.  List
-                    1.  ``O(N)``
-            4.  데이터를 가져올 때 그 메모리 주소의 근방을 가져온다(``cache: 4kb``). 근데 list는 근처에 다음 값이 없기 때문에 ``cache miss``가 된다. 그래서 게임에서 ``배열``을 많이 쓴다.
-27. Packaging과 Stack, Que
+            2.  List
+                1.  ``O(1)``
+        3.  특정 ``index``를 가져올 때
+            1.  Slice
+                1.  ``O(1)``
+            2.  List
+                1.  ``O(N)``
+        4.  데이터를 가져올 때 그 메모리 주소의 근방을 가져온다(``cache: 4kb``). 근데 list는 근처에 다음 값이 없기 때문에 ``cache miss``가 된다. 그래서 게임에서 ``배열``을 많이 쓴다.
+28. Packaging과 Stack, Que
     1.  Packaging
         1.  대문자는 공개
         2.  소문자는 비공개
     2.  stack과 que는 slice와 linked list로 만들 수 있다. 
+        1.  slice로 만드면
+            1.  캐쉬미스가 덜나서 좋다
+            2.  그리고 배열에 ``element``를 추가하면 복사하기 때문에 초반에는 연산이 오래 걸리지만, 어느정도 크기가 되면 속도가 빨라진다.
+        2.  linked list
+            1.  넣을 때, 뺄 때 빠르다 ``O(1)``
     3.  Stack
         1.  FILO(First Input Last Out)
     4.  Queue
         1.  FIFO(First Input First Out)
+29. Tree
+    1.  Node
+        1.  Parent
+        2.  Child
+        3.  Leaf
+            1.  마지막 layer
+        4.  Sibiling
+            1.  같은 layer
+    2.  폴더 구조
