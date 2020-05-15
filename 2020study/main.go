@@ -1,12 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"golangTraining/2020study/ch28stackandqueue"
 )
 
 func main() {
-	s := &ch28stackandqueue.Stack{}
-	s.Push(s)
-	fmt.Println(s)
+	queue := ch28stackandqueue.NewQueue()
+
+	for i := 0; i < 10; i++ {
+		queue.Push(i)
+	}
+
+	queue.PrintQueues()
+
 }
