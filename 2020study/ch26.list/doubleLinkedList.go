@@ -8,7 +8,6 @@ type Node struct {
 	val  int
 }
 
-
 type DoubleLinkedList struct {
 	root *Node
 	tail *Node
@@ -58,7 +57,6 @@ func (l *DoubleLinkedList) PrintNodes() {
 	fmt.Printf("%d\n", node.val)
 }
 
-
 func (l *DoubleLinkedList) PrintReverse() {
 	node := l.tail
 	for node.prev != nil {
@@ -67,7 +65,6 @@ func (l *DoubleLinkedList) PrintReverse() {
 	}
 	fmt.Printf("%d\n", node.val)
 }
-
 
 func main() {
 	list := &DoubleLinkedList{}
@@ -82,7 +79,7 @@ func main() {
 	list.RemoveNode(list.root.next)
 
 	list.PrintNodes()
-	
+
 	list.RemoveNode(list.root)
 
 	list.PrintNodes()

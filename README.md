@@ -300,3 +300,12 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
         4.  Sibiling
             1.  같은 layer
     2.  폴더 구조
+    3.  **중요한 자료구조형이다. 잘 숙지하여 자유자재로 쓸 수 있을 것**
+30. Tree의 순회
+    1.  DFS(Depth First Search: 깊이 우선 탐색)
+        1.  구현
+            1.  재귀호출
+            2.  스택
+    2.  BFS(Broad First Search: 너비 우선 탐색)
+        1.  구현
+            1.  Queue

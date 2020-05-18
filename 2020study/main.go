@@ -1,16 +1,33 @@
 package main
 
 import (
-	"golangTraining/2020study/ch28stackandqueue"
+	"fmt"
+	"golangTraining/2020study/ch29tree"
 )
 
 func main() {
-	queue := ch28stackandqueue.NewQueue()
+	tree := &ch29tree.Tree{}
 
-	for i := 0; i < 10; i++ {
-		queue.Push(i)
+	val := 1
+	tree.AddNode(val)
+	val++
+	for i := 0; i < 3; i++ {
+		tree.Root.AddChild(val)
+		val++
 	}
 
-	queue.PrintQueues()
+	for i := 0; i < len(tree.Root.Child); i++ {
+		for j := 0; j < 2; j++ {
+			tree.Root.Child[i].AddChild(val)
+			val++
+		}
+	}
 
+	tree.DFS1()
+
+	fmt.Println()
+
+	tree.DFS2()
+
+	tree.BFS()
 }
