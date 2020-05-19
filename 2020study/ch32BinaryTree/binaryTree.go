@@ -2,86 +2,42 @@ package ch32BinaryTree
 
 import "fmt"
 
-type BinaryTreeNode struct {
+type Node struct {
 	Val   int
-	left  *BinaryTreeNode
-	right *BinaryTreeNode
+	left  *Node
+	right *Node
 }
 
 type BinaryTree struct {
-	Root *BinaryTreeNode
+	Root *Node
 }
 
-func NewBinaryTree(v int) *BinaryTree {
-	tree := &BinaryTree{}
-	tree.Root = &BinaryTreeNode{Val: v}
-	return tree
+func NewBinaryTree(val int) *BinaryTree {
+	return &BinaryTree{Root: &Node{Val: val}}
 }
 
-func (b *BinaryTreeNode) AddNode(v int) *BinaryTreeNode {
-	if b.Val > v {
-		if b.left == nil {
-			b.left = &BinaryTreeNode{Val: v}
-			return b.left
+func (n *Node) AddNode(val int) {
+	if val < n.Val {
+		if n.left == nil {
+			n.left = &Node{Val: val}
 		} else {
-			return b.left.AddNode(v)
+			n.left.AddNode(val)
 		}
 	} else {
-		if b.right == nil {
-			b.right = &BinaryTreeNode{Val: v}
-			return b.right
+		if n.right == nil {
+			n.right = &Node{Val: val}
 		} else {
-			return b.right.AddNode(v)
+			n.right.AddNode(val)
 		}
 	}
 }
 
-type depthNode struct {
-	depth int
-	node  *BinaryTreeNode
-}
-
-func (b *BinaryTree) Print() {
-	q := []depthNode{}
-	q = append(q, depthNode{depth: 0, node: b.Root})
-	currentDepth := 0
-
-	for len(q) > 0 {
-		var first depthNode
-		first, q = q[0], q[1:]
-
-		if first.depth != currentDepth {
-			fmt.Println()
-			currentDepth = first.depth
-		}
-		fmt.Print(first.node.Val, " ")
-
-		if first.node.left != nil {
-			q = append(q, depthNode{depth: currentDepth + 1, node: first.node.left})
-		}
-
-		if first.node.right != nil {
-			q = append(q, depthNode{depth: currentDepth + 1, node: first.node.right})
-		}
+func Print(n *Node) {
+	fmt.Printf("%d -> ", n.Val)
+	if n.left != nil {
+		Print(n.left)
 	}
-}
-
-func (b *BinaryTree) Search(v int) (bool, int) {
-	return b.Root.Search(v, 1)
-}
-
-func (b *BinaryTreeNode) Search(v int, cnt int) (bool, int) {
-	if b.Val == v {
-		return true, cnt
-	} else if b.Val > v {
-		if b.left != nil {
-			return b.left.Search(v, cnt+1)
-		}
-		return false, cnt
-	} else {
-		if b.right != nil {
-			return b.right.Search(v, cnt+1)
-		}
-		return false, cnt
+	if n.right != nil {
+		Print(n.right)
 	}
 }

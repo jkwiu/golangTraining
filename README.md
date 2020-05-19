@@ -306,6 +306,12 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
         1.  구현
             1.  재귀호출
             2.  스택
+        2.  예
+            1.  길찾기(게임): ``Dijkstra Algorithm``
     2.  BFS(Broad First Search: 너비 우선 탐색)
         1.  구현
             1.  Queue
+31. 이진트리
+    1.  이진 검색 트리(BST)
+        1.  left: ``작음``
+        2.  right: ``큼``

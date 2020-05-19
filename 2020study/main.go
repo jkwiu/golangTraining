@@ -2,32 +2,19 @@ package main
 
 import (
 	"fmt"
-	"golangTraining/2020study/ch29tree"
+	"golangTraining/2020study/ch32BinaryTree"
 )
 
 func main() {
-	tree := &ch29tree.Tree{}
+	bt := ch32BinaryTree.NewBinaryTree(3)
 
-	val := 1
-	tree.AddNode(val)
-	val++
-	for i := 0; i < 3; i++ {
-		tree.Root.AddChild(val)
-		val++
-	}
+	fmt.Println(bt.Root.Val)
 
-	for i := 0; i < len(tree.Root.Child); i++ {
-		for j := 0; j < 2; j++ {
-			tree.Root.Child[i].AddChild(val)
-			val++
-		}
-	}
+	bt.Root.AddNode(1)
+	bt.Root.AddNode(5)
+	bt.Root.AddNode(2)
+	bt.Root.AddNode(4)
+	bt.Root.AddNode(6)
 
-	tree.DFS1()
-
-	fmt.Println()
-
-	tree.DFS2()
-
-	tree.BFS()
+	ch32BinaryTree.Print(bt.Root)
 }
