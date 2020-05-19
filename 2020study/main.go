@@ -16,5 +16,24 @@ func main() {
 	bt.Root.AddNode(4)
 	bt.Root.AddNode(6)
 
-	ch32BinaryTree.Print(bt.Root)
+	fmt.Println("DFS")
+	bt.PrintDFS(bt.Root)
+
+	fmt.Println()
+
+	fmt.Println("BFS")
+	bt.PrintBFS()
+
+	fmt.Println()
+	if found, cnt := bt.Search(6); found {
+		fmt.Println("found 6 cnt:", cnt)
+	} else {
+		fmt.Println("not found 6 cnt:", cnt)
+	}
+
+	if found, cnt := bt.Search(11); found {
+		fmt.Println("found 11 cnt:", cnt)
+	} else {
+		fmt.Println("not found 11 cnt:", cnt)
+	}
 }
