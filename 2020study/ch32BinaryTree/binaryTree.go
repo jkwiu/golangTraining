@@ -16,18 +16,25 @@ func NewBinaryTree(val int) *BinaryTree {
 	return &BinaryTree{Root: &Node{Val: val}}
 }
 
-func (n *Node) AddNode(val int) {
+// 여기서 반환값을 사용하지 않음에도 지정해줌에 주목할 필요가 있다.
+// 그건 바로 함수의 완결성을 위해서이다.
+// 호출하는 쪽에서 이 값을 사용할지 말지를 정할 수 있는 옵션을 주는 것이다.
+// 함수를 짤 때는 한가지의 목적보다는 여러가지 가능성을 염두해 두고 짜는 것이 좋다.
+// from goSense
+func (n *Node) AddNode(val int) *Node {
 	if val < n.Val {
 		if n.left == nil {
 			n.left = &Node{Val: val}
+			return n.left
 		} else {
-			n.left.AddNode(val)
+			return n.left.AddNode(val)
 		}
 	} else {
 		if n.right == nil {
 			n.right = &Node{Val: val}
+			return n.right
 		} else {
-			n.right.AddNode(val)
+			return n.right.AddNode(val)
 		}
 	}
 }
