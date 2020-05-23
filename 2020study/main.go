@@ -2,38 +2,27 @@ package main
 
 import (
 	"fmt"
-	"golangTraining/2020study/ch32BinaryTree"
+	"golangTraining/2020study/ch34Heap"
 )
 
 func main() {
-	bt := ch32BinaryTree.NewBinaryTree(3)
+	h := &ch34Heap.Heap{}
 
-	fmt.Println(bt.Root.Val)
+	h.Push(6)
+	h.Push(6)
+	h.Push(7)
+	h.Push(8)
+	h.Push(5)
+	h.Push(9)
 
-	bt.Root.AddNode(1)
-	bt.Root.AddNode(5)
-	bt.Root.AddNode(2)
-	bt.Root.AddNode(4)
-	bt.Root.AddNode(6)
+	h.Print()
 
-	fmt.Println("DFS")
-	bt.PrintDFS(bt.Root)
-
-	fmt.Println()
-
-	fmt.Println("BFS")
-	bt.PrintBFS()
-
-	fmt.Println()
-	if found, cnt := bt.Search(6); found {
-		fmt.Println("found 6 cnt:", cnt)
-	} else {
-		fmt.Println("not found 6 cnt:", cnt)
-	}
-
-	if found, cnt := bt.Search(11); found {
-		fmt.Println("found 11 cnt:", cnt)
-	} else {
-		fmt.Println("not found 11 cnt:", cnt)
-	}
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
+	fmt.Println(h.Pop())
 }
