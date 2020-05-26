@@ -425,8 +425,26 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
                 1.  ``O(1)``
             2.  Add
                 1.  ``O(1)``
-            3.  Remov
+            3.  Remove
                 1.  ``O(1)``
     4.  단점
         1.  정렬해서 뽑아내기 어렵다.
             1.  이런 경우 sorted map을 사용하지만 add, remove가 ``O(log``<sub>2</sub>``N)`` 왜냐하면 BST를 사용하니깐
+38. Thread
+    1.  현대 프로그래밍에서 중요한 프로그래밍 기술이고 어렵다
+    2.  웹개발은 필요x
+    3.  시스템이나 게임서버는 필수
+    4.  context thread
+        1.  한 프로세스를 실행하다가 다른 프로세스를 실행할 때 일어나는 cpu의 process 전환
+    5.  스레드를 너무 많이 만들기 되면 context switching 비용이 많이 들어 비효율적이다.
+    6.  OS영역의 kernel thread ->wraping-> go thread
+    7.  os thread를 최소한으로 사용하고 그걸 잘게 쪼개서 사용하는 것이 go thread(context switching을 최대한 안일어나게 하기 위해 고안함) 
+    8.  cpu갯수보다 thread 갯수가 많아지면 context switching이 일어난다.
+    9.  cpu 갯수에 가깝게 thread를 만들고
+    10. 각 thread를 잘게 쪼개서 go thread에 할당한다.
+    11. 따라서 go thread는 사용자가 cpu의 thread를 신경쓰지 않아도 된다.
+39. Thread2
+    1.  용어 차이
+        1.  프로그램
+        2.  프로세스
+        3.  쓰레드
