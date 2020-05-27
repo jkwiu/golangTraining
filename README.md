@@ -430,7 +430,28 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
     4.  단점
         1.  정렬해서 뽑아내기 어렵다.
             1.  이런 경우 sorted map을 사용하지만 add, remove가 ``O(log``<sub>2</sub>``N)`` 왜냐하면 BST를 사용하니깐
-38. Thread
+38. GoLang의 Map
+    1.  사용방법
+        1.  선언
+            1.  ``var 변수 map[타입]타입``
+            2.  아무타입이나 다 가능
+        2.  초기화
+            1.  ``변수 = make(map[타입]타입)``
+        3.  삭제
+            1.  ``DELETE(map이름, key)``
+        4.  순회
+            1.  ``for key, value := range map {print(key, value)}``
+    2.  기본값
+        1.  int
+            1.  ``0``
+        2.  string
+            1.  ``""``
+        3.  bool
+            1.  ``false``
+        4.  이러면 내가 기본값으로 한건지, 해당 값으로 한건지 알 수가 없다.
+            1.  ``변수, ok(bool) := map[key]``을 하여 출력을 했을 때 값이 빈값이면 ``ok``가 ``false``를 출력
+                1.  순서는 무작위로 나옴. 전 강의에서 설명했음.
+39. Thread
     1.  현대 프로그래밍에서 중요한 프로그래밍 기술이고 어렵다
     2.  웹개발은 필요x
     3.  시스템이나 게임서버는 필수
@@ -443,7 +464,7 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
     9.  cpu 갯수에 가깝게 thread를 만들고
     10. 각 thread를 잘게 쪼개서 go thread에 할당한다.
     11. 따라서 go thread는 사용자가 cpu의 thread를 신경쓰지 않아도 된다.
-39. Thread2
+40. Thread2
     1.  용어 차이
         1.  프로그램(실행파일 + 데이터)
             1.  쓰레드
