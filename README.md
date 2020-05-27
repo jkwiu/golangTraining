@@ -490,4 +490,5 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
                     1.  내가 그림을 그릴 때 락, 니가 그릴 때 락
                     2.  ``Mutex``
                         1.  실제로 실무에서 어디에 lock을 걸어줘야할지 모르는 복잡한 문제가 발생
+                        2.  실제 다루는 데이터를 중점으로 건다.
                 2.  go channel
