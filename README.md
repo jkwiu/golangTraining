@@ -492,3 +492,59 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
                         1.  실제로 실무에서 어디에 lock을 걸어줘야할지 모르는 복잡한 문제가 발생
                         2.  실제 다루는 데이터를 중점으로 건다.
                 2.  go channel
+41. DeadLock & Channel
+    1.  DeadLock
+        1.  철학자의 식사시간
+            1.  왼쪽 lock(포크)을 잡고 오른쪽 lock(포크)을 잡으려고 하는데 모두 그럴려고 대기중이라 ``DeadLock``이 걸린다.
+            2.  문제가 언제 발생할 지 모른다.(간헐적 발생)
+        2.  방지하기 위한 방법
+            1.  ``Lock``을 잡게 잡거나
+                1.  한 쪽 포크만 들고 바로 내려놓는다.
+            2.  ``Lock``을 크게 잡는다
+                1.  ``globalLock``
+                2.  대기표를 만들고 순서대로 밥을 먹고 반납
+                3.  ``컨베이어 벨트`` 방식(``생산자-소비자 패턴(producer-comsumer pattern)``)
+                    1.  go의 ``channel``
+                        1.  일종의 ``queue(컨베이어 벨트)`` 제공하는 것
+                            1.  Thread Safe
+                            2.  Fixed Size
+                                1.  작업량(queue)를 지정
+42. Channel
+    1.  멀티 스레드를 위해 go에서 제공하는 ``type``
+        1.  Fixed Size & Thread Safe queue
+    2.  사용방법
+        1.  선언
+            1.  ``var a chan [TYPE]``
+        2.  초기화
+            1.  ``make(chan TYPE)``
+                1.  0개 짜리 채널
+                    1.  넣어주면 빼줘야 된다.
+                    2.  안그러면 끝이 안난다.
+        3.  어떤 타입이든지 넣을 수 있다.
+        4.  ``push``와 ``pop`` 제공
+            1.  `->`, `<-`
+            2.  ``c := make(chan int, 1)``
+            3.  push
+                1.  ``c <- 10``
+            4.  pop
+                1.  ``v := <- c``
+            5.  넣어주면 빼줘야 함
+    3.  golang은 멀티스레드를 위해 다음을 제공
+        1.  go thread
+        2.  channel
+        3.  select
+    4.  멀티스레드를 왜 사용해야 하는가?
+        1.  머신의 성능을 최대한 이용하기 위해서
+        2.  무어의 법칙
+        3.  현대는 가상화를 통해서도 멀티스레드가 가능하지만 상황에 따라 맞게 쓸 필요가 있다.
+            1.  멀티프로세스로 갈지, 멀티스레드로 갈지
+43. Select
+    1.  여러개의 채널을 동시에 기다리게 해주는 것
+    2.  사용법
+        1.  switch case와 비슷한 구문
+        2.  ``select{case val := <- c:>}``
+    3.  Time package(코드참고)
+        1.  tick
+            1.  주기적으로 알려주는 channel 제공
+        2.  after
+            1.  특정시간 이후에 한번만 알려주는 channel 제공
