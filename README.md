@@ -570,3 +570,29 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
             2.  variable, structure
         2.  기능
             1.  function
+46. OOP3, Interface
+    1.  Interface
+        1.  객체간 상호관계 정의
+        2.  decoupling이 가능
+            1.  손쉽게 확장이 가능
+    2.  객체
+        1.  상태
+        2.  기능
+            1.  외부기능
+                1.  Interface(외부와의 관계)
+                    1.  기능만을 따로 정의
+            2.  내부기능
+    3.  코드참고
+47. Interface2
+    1.  절차적 프로그래밍
+        1.  변경이 취약
+    2.  OOP(Interface)
+        1.  확장성이 좋다.
+    3.  interface도 ``type``다.
+    4.  type ``Name`` interface{``input`` ``output``}
+    5.  GoLang의 특징
+        1.  DuckTyping
+            1.  C#, JAVA, C++과 다른 점임
+                1.  class A implement interfaceA를 선언해야함
+                    1.  GoLang은 행동만 interface에 구현하면 됨
+            2.  오리처럼 소리내고 걷고 헤엄치면 오리다.
