@@ -596,3 +596,73 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
                 1.  class A implement interfaceA를 선언해야함
                     1.  GoLang은 행동만 interface에 구현하면 됨
             2.  오리처럼 소리내고 걷고 헤엄치면 오리다.
+48. OOD의 SOLID
+    1.  OOD
+        1.  Object Oriented Design
+        2.  Object 중심의 설계(아키텍처)
+    2.  SOLID(OOD의 5가지 설계 원칙)
+        1.  **Single Responsibility Principle**
+            1.  단일책임원칙
+                1.  하나의 객체는 하나의 책임을 가져야 한다.
+                2.  Ex)
+                    1.  예금잔고 객체
+                        1.  입금, 출금으로 책임을 나눌 것인지
+                        2.  입출금으로 할 것인지
+        2.  **Open Closed Principle**
+            1.  확장에는 열려있고, 변경에는 닫혀있어야 한다.
+            2.  1번과 2번만 잘 지켜도 좋은 프로그래밍이다.
+        3.  Liskov Subtitution Principle
+            1.  리스코프 치환 이론
+            2.  Base Type의 기존 함수 또는 동작을 바꾸지 말아라.(상속에서 가끔 문제가 생김)
+            3.  golang에서는 상속이 없다.
+                1.  그래서 golang은 oop가 아니다?
+                    1.  oop에 상속이 있어야 한다는 내용은 없다.
+        4.  Interface Segregation Principle
+            1.  인터페이스 분리 원칙
+            2.  여러개의 관계를 모아놓은 인터페이스보다 관계 하나씩 정의하는 것이 더 좋다.
+                1.  Ex) 게임
+                    1.  케릭터의 동작을 모은 것보다 각각 분리해놓은 것이 낫다.(의존성이 낮아짐)
+        5.  Dependency Inversion Priciple
+            1.  관계는 인터페이스에 의존하는 것이 객체에 의존하는 것보다 좋다.
+    3.  의존성을 낮추고 응집성을 높이기 위함
+49. Beyond OOP
+    1.  OOP는 잘 만들기 어렵고 새로운 프로그래머가 파악하는데 시간이 오래 걸린다.
+    2.  현대에 와서 생긴 OOP의 문제점
+        1.  실리콘 밸리
+            1.  Tech Debt
+                1.  Make fast(빨리 만들고)
+                2.  Break things(빨리 없애자)에서 Fast Break Things로 ...가는 움직임이 되고 Stateless가 나오게 되었다.
+                3.  에 적합하지 않다
+    3.  절차적 프로그래밍(상태, 기능 분리) -> OOP(상태, 기능 혼재) -> Stateless
+    4.  Stateless(상태를 없애버리고 기능만 만들자, 상태는 외부에서 만들어서 가져오자, 레고조립)
+        1.  Micro Service(웹)
+        2.  Serverless(웹)
+        3.  Functional(language)
+            1.  erlang
+            2.  lisp
+            3.  scala
+            4.  F#
+            5.  elixir
+        4.  ECS(게임)
+            1.  Entity Component System
+        5.  MVC(UI)
+            1.  Model
+                1.  data
+            2.  View
+            3.  Controller
+                1.  기능
+50. 마지막 강좌
+    1.  컴퓨터 공학
+        1.  지식
+            1.  습득(공부)
+        2.  기술
+            1.  숙달(연습)
+    2.  지속적으로 공부해야 할 것
+        1.  컴퓨터원리 -> 하드웨어 -> CPU설계
+        2.  프로그래밍 언어와 문법
+        3.  자료구조 & 알고리즘
+        4.  Thread & 고급기능
+        5.  OOP -> 설계 -> 아키텍처
+    3.  만들고 싶은 것이 있어야 한다.
+        1.  Make Anything!!
+            1.  자료조사(break down)
