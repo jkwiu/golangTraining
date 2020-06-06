@@ -282,10 +282,11 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
     1.  Packaging
         1.  대문자는 공개
         2.  소문자는 비공개
-    2.  stack과 que는 slice와 linked list로 만들 수 있다. 
+    2.  stack과 queue는 slice와 linked list로 만들 수 있다. 
         1.  slice로 만드면
             1.  캐쉬미스가 덜나서 좋다
             2.  그리고 배열에 ``element``를 추가하면 복사하기 때문에 초반에는 연산이 오래 걸리지만, 어느정도 크기가 되면 속도가 빨라진다.
+                1.  왜냐하면 배열이 추가될 때는 capacity를 2배로 늘리고 추가를 하게 되는데, 배열이 1개일 때는 2개로 늘리고 복사한다. 그런데 배열이 어느정도 성장한 뒤에는 크기가 충분히 커져있기 때문에 O(N)이라고는 하지만 실제 성능은 잘 나온다. 그래도 O(1)보다는 느리다. 그리고 slice로 했을 때 캐쉬미스가 덜 나기 때문에 성능상으로 더 빠를 수 있다.
         2.  linked list
             1.  넣을 때, 뺄 때 빠르다 ``O(1)``
     3.  Stack
