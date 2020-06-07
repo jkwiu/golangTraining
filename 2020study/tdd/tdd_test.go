@@ -196,54 +196,41 @@ func TestPop_Heap(t *testing.T) {
 // 정수배열과 정수 N이 주어지면, N번째로 작은 배열 원소를 찾으시오
 func TestHeapAlgorithm(t *testing.T) {
 	assert := assert.New(t)
-	nums := []int{-1, 3, -1, 5, 4}
+	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
-	// 1번째 작은 수
-	h = &Heap{}
-	for i := 0; i < len(nums); i++ {
-		h.Push(nums[i])
-		if h.Count() > 1 {
-			h.Pop()
+	n := 1
+	for i := 0; i < 10; i++ {
+		h = &Heap{}
+		for i := 0; i < len(nums); i++ {
+			h.Push(nums[i])
+			if h.Count() > n {
+				h.Pop()
+			}
 		}
+		assert.Equal(n, h.Pop())
+		n++
 	}
-	assert.Equal(-1, h.Pop())
+}
 
-	// 2번째 작은 수
-	h = &Heap{}
-	for i := 0; i < len(nums); i++ {
-		h.Push(nums[i])
-		if h.Count() > 2 {
-			h.Pop()
-		}
-	}
-	assert.Equal(-1, h.Pop())
-	// 3번째 작은 수
-	h = &Heap{}
-	for i := 0; i < len(nums); i++ {
-		h.Push(nums[i])
-		if h.Count() > 3 {
-			h.Pop()
-		}
-	}
-	assert.Equal(3, h.Pop())
+// hash function
+func TestHash(t *testing.T) {
+	assert := assert.New(t)
+	str1 := "what"
+	str2 := "what1"
+	str3 := "what2"
+	str4 := "what3"
+	assert.NotEqual(Hash(str1), Hash(str2), Hash(str3), Hash(str4))
+}
 
-	// 4번째 작은 수
-	h = &Heap{}
-	for i := 0; i < len(nums); i++ {
-		h.Push(nums[i])
-		if h.Count() > 4 {
-			h.Pop()
-		}
-	}
-	assert.Equal(4, h.Pop())
-
-	// 5번째 작은 수
-	h = &Heap{}
-	for i := 0; i < len(nums); i++ {
-		h.Push(nums[i])
-		if h.Count() > 5 {
-			h.Pop()
-		}
-	}
-	assert.Equal(5, h.Pop())
+func TestMap(t *testing.T) {
+	assert := assert.New(t)
+	m := NewMap()
+	m.Add("hell", "o")
+	m.Add("h", "i")
+	m.Add("j", "k")
+	m.Add("awe", "some")
+	assert.Equal("o", m.Get("hell"))
+	assert.Equal("i", m.Get("h"))
+	assert.Equal("k", m.Get("j"))
+	assert.Equal("some", m.Get("awe"))
 }
