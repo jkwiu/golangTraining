@@ -2,24 +2,45 @@ package main
 
 import (
 	"fmt"
-	"golangTraining/2020study/ch37Map"
+
+	"github.com/golangTraining/2020study/tdd"
 )
 
 func main() {
-	fmt.Println("abcde = ", ch37Map.Hash("abcde"))
-	fmt.Println("abcde = ", ch37Map.Hash("abcde"))
-	fmt.Println("tbcde = ", ch37Map.Hash("tbcde"))
-	fmt.Println("abcdf = ", ch37Map.Hash("abcdf"))
-	fmt.Println("abcasdfdfasdf = ", ch37Map.Hash("abcasdfdfasdf"))
+	var h *tdd.Heap
+	nums := []int{-1, 3, -1, 5, 4}
 
-	m := ch37Map.CreateMap()
-	m.Add("AAA", "0107777777")
-	m.Add("BBB", "0108888888")
-	m.Add("CDFEFDFDFDFFD", "0101111111")
-	m.Add("CCC", "01712387842")
+	// 1번째 작은 수
+	h = &tdd.Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 1 {
+			h.Pop()
+		}
+	}
+	h.Print()
+	fmt.Println(h.Pop())
 
-	fmt.Println("AAA = ", m.Get("AAA"))
-	fmt.Println("BBB = ", m.Get("BBB"))
-	fmt.Println("CDFEFDFDFDFFD = ", m.Get("CDFEFDFDFDFFD"))
-	fmt.Println("CCC", m.Get("CCC"))
+	// 2번째 작은 수
+	h = &tdd.Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 2 {
+			h.Pop()
+		}
+	}
+	h.Print()
+	fmt.Println(h.Pop())
+
+	// 3번째 작은 수
+	h = &tdd.Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 3 {
+			h.Pop()
+		}
+	}
+	h.Print()
+	fmt.Println(h.Pop())
+
 }

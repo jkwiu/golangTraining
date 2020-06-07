@@ -98,3 +98,152 @@ func TestPrintQueue(t *testing.T) {
 	queue.Push(6)
 	stack.PrintStack()
 }
+
+// tree test code
+//		0
+//     /|\
+//	 1	2  3
+//	 /\ /\ /\
+//  4 5 6 7 8 9
+var tree *Tree
+
+func TestNewTree(t *testing.T) {
+	assert := assert.New(t)
+	tree = NewTree()
+	assert.Equal(0, tree.Root.Val)
+	assert.Equal(3, tree.Root.Childs[2].Val)
+}
+
+// Binary Tree
+var bt *BinaryTree
+
+func TestAddNode_BinaryTree(t *testing.T) {
+	assert := assert.New(t)
+	bt = NewBinaryTree(5)
+	bt.Root.AddNode(1)
+	bt.Root.AddNode(9)
+	assert.Equal(9, bt.Root.Right.Val)
+	assert.Equal(1, bt.Root.Left.Val)
+}
+
+func TestSearch(t *testing.T) {
+	assert := assert.New(t)
+	binaryTree := NewBinaryTree(5)
+	binaryTree.Root.AddNode(3)
+	binaryTree.Root.AddNode(2)
+	binaryTree.Root.AddNode(4)
+	binaryTree.Root.AddNode(8)
+	binaryTree.Root.AddNode(7)
+	binaryTree.Root.AddNode(6)
+	binaryTree.Root.AddNode(10)
+	binaryTree.Root.AddNode(9)
+
+	if found, cnt := binaryTree.Search(5); found {
+		assert.Equal(true, found)
+		assert.Equal(1, cnt)
+	} else {
+		assert.Equal(false, found)
+		assert.Equal(1, cnt)
+	}
+
+	if found, cnt := binaryTree.Search(4); found {
+		assert.Equal(true, found)
+		assert.Equal(3, cnt)
+	} else {
+		assert.Equal(false, found)
+		assert.Equal(3, cnt)
+	}
+
+	if found, cnt := binaryTree.Search(11); found {
+		assert.Equal(true, found)
+		assert.Equal(3, cnt)
+	} else {
+		assert.Equal(false, found)
+		assert.Equal(3, cnt)
+	}
+}
+
+// Heap
+var h *Heap
+
+func TestPush_Heap(t *testing.T) {
+	assert := assert.New(t)
+	h = &Heap{}
+	h.Push(1)
+	h.Push(2)
+	assert.Equal(2, h.list[0])
+
+	h.Push(3)
+	assert.Equal(3, h.list[0])
+
+	h.Push(4)
+	assert.Equal(4, h.list[0])
+}
+
+func TestPop_Heap(t *testing.T) {
+	assert := assert.New(t)
+
+	h.Pop()
+	assert.Equal(3, h.list[0])
+
+	h.Pop()
+	assert.Equal(2, h.list[0])
+
+	h.Pop()
+	assert.Equal(1, h.list[0])
+}
+
+// 정수배열과 정수 N이 주어지면, N번째로 작은 배열 원소를 찾으시오
+func TestHeapAlgorithm(t *testing.T) {
+	assert := assert.New(t)
+	nums := []int{-1, 3, -1, 5, 4}
+
+	// 1번째 작은 수
+	h = &Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 1 {
+			h.Pop()
+		}
+	}
+	assert.Equal(-1, h.Pop())
+
+	// 2번째 작은 수
+	h = &Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 2 {
+			h.Pop()
+		}
+	}
+	assert.Equal(-1, h.Pop())
+	// 3번째 작은 수
+	h = &Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 3 {
+			h.Pop()
+		}
+	}
+	assert.Equal(3, h.Pop())
+
+	// 4번째 작은 수
+	h = &Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 4 {
+			h.Pop()
+		}
+	}
+	assert.Equal(4, h.Pop())
+
+	// 5번째 작은 수
+	h = &Heap{}
+	for i := 0; i < len(nums); i++ {
+		h.Push(nums[i])
+		if h.Count() > 5 {
+			h.Pop()
+		}
+	}
+	assert.Equal(5, h.Pop())
+}

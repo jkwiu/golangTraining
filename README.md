@@ -298,9 +298,9 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
         1.  Parent
         2.  Child
         3.  Leaf
-            1.  마지막 layer
+            1.  마지막 layer의 Node
         4.  Sibiling
-            1.  같은 layer
+            1.  같은 layer(형제 Node)
     2.  폴더 구조
     3.  **중요한 자료구조형이다. 잘 숙지하여 자유자재로 쓸 수 있을 것**
 30. Tree의 순회
@@ -360,11 +360,11 @@ golang 복습(https://www.youtube.com/channel/UCZp_ftx6UB_32VfVmlS3o_A)
             2.  right: 2N+2
         3.  N번째 노드의 부모
             1.  N-1/2
-        4.  최대합
+        4.  최대힙, 최소힙
             1.  Push
-                1.  위에서부터 아래로 비교하면서 스왑
+                1.  맨 끝(아래)에 넣고 부모와 비교하면서 위로 올린다.
             2.  Pop
-                1.  아래서부터 위로 비교하면서 스왑
+                1.  맨 위를 빼고 다시 맨 끝(아래)을 맨 위로 올려서 비교하면서 내려간다.
 35. Heap을 이용한 알고리즘 풀이
     1.  문제
         1.  정수배열과 정수 N이 주어지면, N번째로 큰 배열 원소를 찾으시오
