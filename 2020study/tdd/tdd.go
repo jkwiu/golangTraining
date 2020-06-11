@@ -1,6 +1,26 @@
+// double linked list
+// stack
+// queue
+// tree
+// DFS1(재귀), 깊이 우선 탐색
+// DFS2(스택)
+// BFS(큐), 너비 우선 탐색
+// binary tree
+// BST(Binary Search Tree)
+// 최소힙
+// 힙을 이용한 알고리즘
+// hash
+// map
+
 package tdd
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"strconv"
+	"sync"
+	"time"
+)
 
 // 1. linked list
 type Node struct {
@@ -393,4 +413,133 @@ func (m *Map) Get(key string) string {
 		}
 	}
 	return ""
+}
+
+// thread1(mutex)
+type Account struct {
+	balance int
+	mutex   *sync.Mutex
+}
+
+var account []*Account
+var globalLock *sync.Mutex
+
+func (a *Account) Withdraw(val int) {
+	a.mutex.Lock()
+	a.balance -= val
+	a.mutex.Unlock()
+}
+
+func (a *Account) Deposit(val int) {
+	a.mutex.Lock()
+	a.balance += val
+	a.mutex.Unlock()
+}
+
+func (a *Account) Balance() int {
+	a.mutex.Lock()
+	balance := a.balance
+	a.mutex.Unlock()
+	return balance
+}
+
+func Transfer(sender, receiver int, money int) {
+	globalLock.Lock()
+	account[sender].Withdraw(money)
+	account[receiver].Deposit(money)
+	globalLock.Unlock()
+}
+
+func RandomTransfer() {
+	var sender, balance int
+	for {
+		sender = rand.Intn(len(account))
+		balance = account[sender].Balance()
+		if balance > 0 {
+			break
+		}
+	}
+
+	var receiver int
+	for {
+		receiver = rand.Intn(len(account))
+		if sender != receiver {
+			break
+		}
+	}
+	money := rand.Intn(balance)
+	Transfer(sender, receiver, money)
+}
+
+func GoTransfer() {
+	for {
+		RandomTransfer()
+	}
+}
+
+func GetTotalBalance() int {
+	globalLock.Lock()
+	total := 0
+	for i := 0; i < len(account); i++ {
+		total += account[i].balance
+	}
+	globalLock.Unlock()
+	return total
+}
+
+func PrintTotalBalance() {
+	fmt.Printf("Total: %d\n", GetTotalBalance())
+}
+
+// thread2(channel)
+// 컨베이 벨트 방식
+type Car struct {
+	val string
+}
+
+type Plane struct {
+	val string
+}
+
+func StartCarWork(chan1 chan Car) {
+	i := 0
+	for {
+		time.Sleep(1 * time.Second)
+		chan1 <- Car{val: "Car: " + strconv.Itoa(i)}
+		i++
+	}
+}
+func StartPlaneWork(chan1 chan Plane) {
+	i := 0
+	for {
+		time.Sleep(1 * time.Second)
+		chan1 <- Plane{val: "Plane: " + strconv.Itoa(i)}
+		i++
+	}
+}
+
+func MakeTire(carChan chan Car, planeChan chan Plane, outCarChan chan Car, outPlaneChan chan Plane) {
+	for {
+		select {
+		case car := <-carChan:
+			car.val += "Tire_C, "
+			outCarChan <- car
+		case plane := <-planeChan:
+			plane.val += "Tire_P, "
+			outPlaneChan <- plane
+		}
+	}
+}
+
+func MakeEngine(carChan chan Car, planeChan chan Plane, outCarChan chan Car, outPlaneChan chan Plane) {
+	for {
+		select {
+		case car := <-carChan:
+			car.val += "Engine_C, "
+			outCarChan <- car
+		case plane := <-planeChan:
+			plane.val += "Engine_P, "
+			outPlaneChan <- plane
+		}
+	}
 }

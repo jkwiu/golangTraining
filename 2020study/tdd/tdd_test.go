@@ -1,6 +1,8 @@
 package tdd
 
 import (
+	"strconv"
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -233,4 +235,60 @@ func TestMap(t *testing.T) {
 	assert.Equal("i", m.Get("h"))
 	assert.Equal("k", m.Get("j"))
 	assert.Equal("some", m.Get("awe"))
+}
+
+// thread1(account)
+func TestThread1_Account(t *testing.T) {
+	assert := assert.New(t)
+	for i := 0; i < 20; i++ {
+		account = append(account, &Account{1000, &sync.Mutex{}})
+	}
+	globalLock = &sync.Mutex{}
+	assert.Equal(20000, GetTotalBalance())
+	for i := 0; i < 10; i++ {
+		go GoTransfer()
+	}
+
+	cnt := 0
+	for {
+		assert.Equal(20000, GetTotalBalance())
+		cnt++
+		if cnt == 100 {
+			break
+		}
+	}
+}
+
+// thread2(channel)
+func TestThread2_Channel(t *testing.T) {
+	assert := assert.New(t)
+
+	carChan1 := make(chan Car)
+	carChan2 := make(chan Car)
+	carChan3 := make(chan Car)
+
+	planeChan1 := make(chan Plane)
+	planeChan2 := make(chan Plane)
+	planeChan3 := make(chan Plane)
+
+	go StartCarWork(carChan1)
+	go StartPlaneWork(planeChan1)
+	go MakeTire(carChan1, planeChan1, carChan2, planeChan2)
+	go MakeEngine(carChan2, planeChan2, carChan3, planeChan3)
+
+	carCnt := 0
+	planeCnt := 0
+	for {
+		select {
+		case result := <-carChan3:
+			assert.Equal("Car: "+strconv.Itoa(carCnt)+"Tire_C, Engine_C, ", result.val)
+			carCnt++
+		case result := <-planeChan3:
+			assert.Equal("Plane: "+strconv.Itoa(planeCnt)+"Tire_P, Engine_P, ", result.val)
+			planeCnt++
+		}
+		if carCnt == 10 || planeCnt == 10 {
+			break
+		}
+	}
 }
