@@ -543,3 +543,70 @@ func MakeEngine(carChan chan Car, planeChan chan Plane, outCarChan chan Car, out
 		}
 	}
 }
+
+// OOP1
+type Bread struct {
+	val string
+}
+
+type Jam interface {
+	GetOneSpoon() SpoonOfJam
+}
+
+type SpoonOfJam interface {
+	String() string
+}
+
+func (b *Bread) PutJam(jam Jam) {
+	spoon := jam.GetOneSpoon()
+	b.val += spoon.String()
+}
+
+func (b *Bread) String() string {
+	return "bread" + b.val
+}
+
+type AppleJam struct {
+}
+
+type SpoonOfAppleJam struct {
+}
+
+func (a *AppleJam) GetOneSpoon() SpoonOfJam {
+	return &SpoonOfAppleJam{}
+}
+
+func (a *SpoonOfAppleJam) String() string {
+	return "+Apple"
+}
+
+type OrangeJam struct {
+}
+
+type SpoonOfOrangeJam struct {
+}
+
+func (a *OrangeJam) GetOneSpoon() SpoonOfJam {
+	return &SpoonOfOrangeJam{}
+}
+
+func (a *SpoonOfOrangeJam) String() string {
+	return "+Orange"
+}
+
+// oop2
+type InterfaceA interface {
+	AAA(int) int
+	BBB(int) string
+}
+
+type StructA struct {
+}
+
+func (s *StructA) AAA(x int) int {
+	return x * x
+}
+
+func (s *StructA) BBB(x int) string {
+	return strconv.Itoa(x) + "yo"
+}

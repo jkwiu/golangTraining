@@ -292,3 +292,26 @@ func TestThread2_Channel(t *testing.T) {
 		}
 	}
 }
+
+// oop1
+func TestOOP1(t *testing.T) {
+	assert := assert.New(t)
+	bread1 := &Bread{}
+	appleJam := &AppleJam{}
+	bread1.PutJam(appleJam)
+	assert.Equal("bread+Apple", bread1.String())
+
+	bread2 := &Bread{}
+	orangeJam := &OrangeJam{}
+	bread2.PutJam(orangeJam)
+	assert.Equal("bread+Orange", bread2.String())
+}
+
+// oop2
+func TestOOP2(t *testing.T) {
+	assert := assert.New(t)
+	var c InterfaceA
+	c = &StructA{}
+	assert.Equal(4, c.AAA(2))
+	assert.Equal("2yo", c.BBB(2))
+}

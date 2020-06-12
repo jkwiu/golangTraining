@@ -1,25 +1,23 @@
 package main
 
 import (
-	"strconv"
 	"fmt"
+	"strconv"
 )
 
 type StructA struct {
-	
 }
 
 func (a *StructA) AAA(x int) int {
-	return x*x
+	return x * x
 }
 
-func (a *StructA) BBB(x int) string{
+func (a *StructA) BBB(x int) string {
 	return "X= " + strconv.Itoa(x)
 }
 
 func main() {
 	var c InterfaceA
 	c = &StructA{}
-
-	fmt.Println(c.BBB(3))
+	fmt.Println(c.AAA(2))
 }
