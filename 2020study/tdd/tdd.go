@@ -11,6 +11,10 @@
 // 힙을 이용한 알고리즘
 // hash
 // map
+// thread1(account)
+// thread2(channel)
+// oop1
+// oop2
 
 package tdd
 
