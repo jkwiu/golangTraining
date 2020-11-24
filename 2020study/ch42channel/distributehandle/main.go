@@ -1,0 +1,50 @@
+package main
+
+import "sync"
+
+func main() {
+	// Cut 고루틴을 거친 자료들이 6개의 Draw 고루틴으로 분산되고 이것이 다시 하나로 모인 뒤에 10개의 Paint 고루틴으로 분산되고
+	// 이것이 하나로 모인 뒤에 3개의 Decorate 고루틴으로 분산되고 다시 하나로 모여서 Box 고루틴을 거쳐서 out으로 나오게 된다.
+	// out := Chain(Cut, Distribute(Draw, 6), Distribute(Paint, 10), Distribute(Decorate, 3), Box)(in)
+}
+
+type IntPipe func(<-chan int) <-chan int
+
+func Distribute(p IntPipe, n int) IntPipe {
+	return func(in <-chan int) <-chan int {
+		cs := make([]<-chan int, n)
+		for i := 0; i < n; i++ {
+			cs[i] = p(in)
+		}
+		return FanIn(cs...)
+	}
+}
+
+func Chain(ps ...IntPipe) IntPipe {
+	return func(in <-chan int) <-chan int {
+		c := in
+		for _, p := range ps {
+			c = p(c)
+		}
+		return c
+	}
+}
+
+func FanIn(ins ...<-chan int) <-chan int {
+	out := make(chan int)
+	var wg sync.WaitGroup
+	wg.Add(len(ins))
+	for _, in := range ins {
+		go func(in <-chan int) {
+			defer wg.Done()
+			for num := range in {
+				out <- num
+			}
+		}(in)
+	}
+	go func() {
+		wg.Wait()
+		close(out)
+	}()
+	return out
+}
