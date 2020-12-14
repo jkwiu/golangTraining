@@ -18,7 +18,6 @@ func main() {
 	seoul := &WPPIS{Name: "seoul", UpdateRate: 1000}
 
 	for {
-		// rstChan := make(chan string, 200)
 		wg.Add(5)
 		go inje.start()
 		go kangwon.start()
