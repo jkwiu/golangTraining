@@ -22,7 +22,7 @@ func Range(ctx context.Context, start, step int) <-chan int {
 	return out
 }
 
-type IntPipe func(<-chan int) <-chan int
+type IntPipe func(context.Context, <-chan int) <-chan int
 
 // FilterMultiple returns a IntPipe that filter multiple of n
 func FilterMultiple(n int) IntPipe {
@@ -80,5 +80,5 @@ func PrintPrimes(max int) {
 }
 
 func main() {
-	PrintPrimes(10)
+	PrintPrimes(100)
 }
