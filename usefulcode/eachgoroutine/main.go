@@ -6,12 +6,13 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"io/ioutil"
-	"log"
 	"net"
 	"net/http"
 	"runtime"
 	"sync"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // UnifedSCADA is Object of total turbines
@@ -180,7 +181,7 @@ func (w *WPPIS) Start(us *UnifedSCADA, isRestart chan *WPPIS) {
 			// 빈 값이 오면 함수 종료
 			if i.URL == "" {
 				defer cancel()
-				log.Println("빈 값이 와서 종료합니다 ...", i)
+				log.Debug("빈 값이 와서 종료합니다 ...", i)
 				isRestart <- w
 				return
 			}
@@ -195,7 +196,7 @@ func (w *WPPIS) Start(us *UnifedSCADA, isRestart chan *WPPIS) {
 
 func (w *WPPIS) Restart(us *UnifedSCADA, isRestart chan *WPPIS) {
 	// start := time.Now()
-	log.Printf("%s의 재시작 요청을 시작됩니다.\n", w.URL)
+	log.Debug("%s의 재시작 요청을 시작됩니다.\n", w.URL)
 	for {
 		ctx, cancel := context.WithCancel(context.Background())
 		c := w.toJSON(ctx, w.toXML(ctx, w.getReq(ctx, us)))
@@ -204,11 +205,10 @@ func (w *WPPIS) Restart(us *UnifedSCADA, isRestart chan *WPPIS) {
 			// 빈 값이 오면 함수 종료
 			if i.URL == "" {
 				defer cancel()
-				log.Println("빈 값이 와서 종료합니다 ...")
+				log.Info("빈 값이 와서 종료합니다 ...")
 				isRestart <- w
 				return
 			}
-			log.Println(i)
 		}
 		// fmt.Printf("URL: %s 업데이트 주기: %d 실행시간: %v Goroutine수: %d\n", w.URL, w.UpdateRate, time.Since(start), runtime.NumGoroutine())
 		time.Sleep(time.Duration(w.UpdateRate) * time.Millisecond)
@@ -233,10 +233,10 @@ func (w *WPPIS) getReq(ctx context.Context, us *UnifedSCADA) <-chan []byte {
 				Transport: tr,
 				Timeout:   5000 * time.Millisecond,
 			}
-			log.Printf("\n\n%s에 대한 리퀘스트 시작 바로 직전 ...\n", w.URL)
+			log.Debug("\n\n%s에 대한 리퀘스트 시작 바로 직전 ...\n", w.URL)
 			res, err := client.Get("https://" + w.URL + "/anonymous/RealtimeData.xml?type=DETAIL")
 			if err, ok := err.(net.Error); ok && err.Timeout() {
-				log.Println("Timeout error!!!")
+				log.Info("Timeout error!!!")
 				us.Mu.Lock()
 				us.TotalData[w.URL] = WPPIS{
 					URL:        w.URL,
@@ -247,19 +247,19 @@ func (w *WPPIS) getReq(ctx context.Context, us *UnifedSCADA) <-chan []byte {
 				return
 			}
 			if err != nil {
-				log.Println("getReq에서의 에러", err)
+				log.Error("getReq에서의 에러", err)
 				return
 			}
-			log.Printf("%s의 함수는 진행 중 ...\n", w.URL)
+			log.Debug("%s의 함수는 진행 중 ...\n", w.URL)
 			defer res.Body.Close()
 			byteValue, err := ioutil.ReadAll(res.Body)
 			if err != nil {
-				log.Println(err)
+				log.Error(err)
 			}
 			byteChan <- byteValue
 		}
 	}()
-	log.Printf("%s는 캔슬 요청을 보냈어도 여기까진 실행됨 ...\n", w.URL)
+	log.Debug("%s는 캔슬 요청을 보냈어도 여기까진 실행됨 ...\n", w.URL)
 	return byteChan
 }
 
@@ -272,7 +272,7 @@ func (w *WPPIS) toXML(ctx context.Context, res <-chan []byte) <-chan wppisXML {
 		for r := range res {
 			err := xml.Unmarshal(r, &xmlData)
 			if err != nil {
-				log.Println(err)
+				log.Error(err)
 			}
 			select {
 			case xmlChan <- xmlData:
@@ -330,6 +330,9 @@ func (w *WPPIS) toJSON(ctx context.Context, xmlData <-chan wppisXML) <-chan WPPI
 var us *UnifedSCADA
 
 func main() {
+	// set logging level
+	log.SetLevel(log.ErrorLevel)
+
 	servers := []*WPPIS{
 		{
 			URL:        "galapagos.scada.unison.co.kr",
@@ -354,8 +357,13 @@ func main() {
 	go func() {
 		for {
 			for ir := range isRestart {
-				log.Printf("%s의 리퀘스트 재시작 요청 ...\n\n", ir.URL)
-				log.Println("goroutine 갯수: ", runtime.NumGoroutine())
+				log.SetFormatter(&log.JSONFormatter{})
+				log.WithFields(
+					log.Fields{
+						"url": ir.URL,
+					},
+				).Error("리퀘스트 재시작 요청")
+				log.Debug("goroutine 갯수: ", runtime.NumGoroutine())
 				go ir.Restart(us, isRestart)
 				time.Sleep(1000 * time.Millisecond)
 			}
@@ -366,9 +374,14 @@ func main() {
 		us.Mu.Lock()
 		str, err := json.Marshal(us.TotalData)
 		if err != nil {
-			log.Println(err)
+			log.Error(err)
 		}
-		log.Println(string(str))
+		log.SetFormatter(&log.JSONFormatter{})
+		log.WithFields(
+			log.Fields{
+				"time": "time",
+			},
+		).Debug(string(str))
 		us.Mu.Unlock()
 		time.Sleep(1000 * time.Millisecond)
 	}
